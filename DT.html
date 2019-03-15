@@ -1,0 +1,68 @@
+<html><head><style type="text/css"></style></head><body><style>
+    g.node {
+        font-family: Verdana, Helvetica;
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+    rect.node-unacc {
+        fill: #F97B49;
+        stroke: red;
+        stroke-width: 1px;
+    }
+    rect.node-acc {
+        fill: #FFD26E;
+        stroke: #B34200;
+        stroke-width: 1px;
+    }
+    rect.node-good {
+        fill: #FFFB7A;
+        stroke: #FFB150;
+        stroke-width: 1px;
+    }
+    rect.node-dot{
+        fill:#DCD3D3;
+        stroke:black;
+        stroke-width:1px;
+    }
+    rect.node-attr{
+        fill: white;
+        stroke: white;
+        stroke-width: 1px;
+    }
+    rect.node-vgood{
+        fill: lightgreen;
+        stroke: green;
+        stroke-width: 1px;
+    }
+    path.link {
+        fill: none;
+        stroke: gray;
+    }
+    .controls{
+        position: absolute;
+        top:10px;
+        left:10px;
+    }
+    rect,text{
+        cursor : pointer;
+    }
+    body,html{
+        margin:0;
+    }
+</style>
+
+<div id="tree-container"></div>
+<div class="controls"><a href="#" class="next">Next</a></div>
+<div class="treeJSON"></div>
+<script type="text/javascript" src="lib/min/jquery-1.6.2.min.js"></script>
+<script type="text/javascript" src="lib/min/d3.min.js"></script>
+<script type="text/javascript" src="lib/min/d3.layout.min.js"></script>
+<script type="text/javascript" src="buildTree.js"></script>
+
+<script>
+    $(function () {
+        //buildTree("#tree-container");
+    });
+</script>
+</body></html>
