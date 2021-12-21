@@ -28,7 +28,7 @@ $(function(){
                 "persons" : tempData[3],
                 "lug_boot" : tempData[4],
                 "safety" : tempData[5],
-                "class" : tempData[6]
+                "class" : tempData[6].trim()
             };
             carData.push(data);
         }
@@ -52,6 +52,11 @@ $(function(){
         var x = flattenObject(treeModel);
         var y = filterFlatObj(x);
         treeModelCurrent = controlUnflatten(y);
+        update();
+    });
+    $(".skip").click(function(){
+        levelCounter = level;
+        treeModelCurrent = treeModel;
         update();
     });
     function filterFlatObj(obj){
@@ -257,7 +262,6 @@ $(function(){
         maxLabelLength = 0;
         visit(treeModelCurrent, function(d)
         {
-            totalNodes++;
             maxLabelLength = d.name.length;
         }, function(d)
         {
@@ -281,15 +285,7 @@ $(function(){
         if( typeof layoutRoot !== 'undefined'){
             $("#tree-container").html("");
         }
-        visit(treeModelCurrent, function(d)
-        {
-            totalNodes++;
-            maxLabelLength = d.name.length;
-        }, function(d)
-        {
-            //return d.contents && d.contents.length > 0 ? d.contents : null;
-        });
-        size = { width:$(window).width(), height: Math.max(totalNodes * 10, $(window).height())};    
+        size = { width:$(window).width() - 30, height: Math.max(levelCounter * 15 || 0, $(window).height())};    
         tree.size([size.height, size.width - maxLabelLength*options.fontSize]);    
         nodes = tree.nodes(treeModelCurrent);
         links = tree.links(nodes);
@@ -356,9 +352,7 @@ $(function(){
                 }
             })
             .attr("width", 150)
-            .attr("height", function(d) {
-              return 19;
-            })
+            .attr("height", 19)
             .attr("entropy",function(d){
                 return d.entropy;
             })
@@ -377,23 +371,17 @@ $(function(){
             .attr("class-dis",function(d){
                 return d.classes;
             })
-            .attr("x",function(d){
-                if(d.type == "feature_value"){
-                    return 5;
-                } else {
-                    return 15;
-                }
-            })
+            .attr("x",5)
             .attr("y",2)
             .text(function(d)
             {
                 return d.name;
             });
         $("rect").each(function(){
-            $(this).attr("width",$(this).siblings("text")[0].clientWidth);
+            $(this).attr("width",$(this).siblings("text")[0].getClientRects()[0].width + 10);
         });
         $(".node-attr").each(function(){
-            $(this).attr("width",$(this).siblings("text")[0].clientWidth);
+            $(this).attr("width",$(this).siblings("text")[0].getClientRects()[0].width + 10);
         });
         //$(document).on("click","rect",function(){
         //    alert($(this).attr("entropy") + " " + $(this).attr("class-dis"));
